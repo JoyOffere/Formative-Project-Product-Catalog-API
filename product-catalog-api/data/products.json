@@ -1,0 +1,14 @@
+[
+  {
+    "id": "a422bb75-ab87-4a59-9dc0-0439e5b06316",
+    "name": "Sample Product",
+    "description": "This is a sample product.",
+    "price": 19.99,
+    "stockQuantity": 0,
+    "variants": [],
+    "discount": 0,
+    "tags": [],
+    "createdAt": "2025-03-23T20:48:56.664Z",
+    "updatedAt": "2025-03-23T20:48:56.664Z"
+  }
+]
