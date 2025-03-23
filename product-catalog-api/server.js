@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const app = require('./app');
 const dotenv = require('dotenv');
 const setupDataDirectory = require('./utils/setupData');
