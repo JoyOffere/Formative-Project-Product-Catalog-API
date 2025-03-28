@@ -6,8 +6,10 @@ const db = new sqlite3.Database(dbPath, (err) => {
     else console.log(`Connected to SQLite database at ${dbPath}`);
 });
 
-// Initialize tables
 db.serialize(() => {
+    // Drop the old variants table if it exists (to ensure a clean slate)
+    db.run(`DROP TABLE IF EXISTS variants`);
+
     db.run(`
     CREATE TABLE IF NOT EXISTS products (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,12 +22,13 @@ db.serialize(() => {
   `);
     db.run(`
     CREATE TABLE IF NOT EXISTS variants (
-      id TEXT PRIMARY KEY,
+      id TEXT,
       productId INTEGER,
       size TEXT,
       color TEXT,
       stock INTEGER NOT NULL,
-      FOREIGN KEY (productId) REFERENCES products(id)
+      FOREIGN KEY (productId) REFERENCES products(id),
+      UNIQUE (productId, id)
     )
   `);
     db.run(`
