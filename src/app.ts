@@ -1,11 +1,14 @@
-import bodyParser from "body-parser";
 import db from "./db/database";
 import express from "express";
-import productRoutes from "./routes/productRoutes";
+import router from "./routes"; // Adjust to "./routes" or "./routes/index";
 
 const app = express();
-app.use(bodyParser.json());
-app.use('/api', productRoutes);
+
+// Middleware to parse JSON bodies
+app.use(express.json()); // Replace bodyParser.json() with built-in middleware
+
+// Mount the router at /api
+app.use('/api', router);
 
 // Error Handling Middleware
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -27,3 +30,5 @@ db.get('SELECT 1 AS test', (err) => {
         });
     }
 });
+
+export default app;
