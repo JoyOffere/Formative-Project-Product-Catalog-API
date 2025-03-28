@@ -1,20 +1,27 @@
-import express, { Request, Response } from "express";
-import { Product, products } from "../models/product";
+import * as categoryController from "../controllers/categoryController";
+import * as productController from "../controllers/productController";
+import { Router } from "express";
 
-const router = express.Router();
+const router = Router();
 
-router.post('/products', (req: Request, res: Response) => {
-    const { name, description, price, category, variants, stock } = req.body;
-    if (!name || !price || !stock) {
-        return res.status(400).json({ error: 'Missing required fields' });
-    }
-    const product: Product = { id: products.length + 1, name, description, price, category, variants, stock };
-    products.push(product);
-    res.status(201).json(product);
-});
+// Product Management
+router.post('/products', productController.createProduct);
+router.get('/products', productController.getProducts);
+router.get('/products/:id', productController.getProductById);
+router.put('/products/:id', productController.updateProduct);
+router.delete('/products/:id', productController.deleteProduct);
 
-router.get('/products', (req: Request, res: Response) => {
-    res.json(products);
-});
+// Category Management
+router.get('/categories', categoryController.getCategories);
+router.post('/categories', categoryController.createCategory);
+
+// Search and Filtering
+router.get('/products/search', productController.searchProducts);
+
+// Inventory Management
+router.patch('/products/:id/variants/:variantId/stock', productController.updateStock);
+
+// Reporting
+router.get('/reports/low-stock', productController.getLowStock);
 
 export default router;

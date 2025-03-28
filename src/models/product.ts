@@ -1,12 +1,16 @@
+export interface Variant {
+    id: string;
+    size?: string;
+    color?: string;
+    stock: number;
+}
+
 export interface Product {
     id: number;
     name: string;
     description?: string;
     price: number;
+    discount: number;
     category: string;
-    variants?: { [key: string]: string };
-    stock: number;
+    variants: Variant[];
 }
-
-export const products: Product[] = [];
-export const categories: string[] = [];
